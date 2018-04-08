@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
-import Example from './Example';
+import Patients from './Patients';
 
 import Empty from '../../components/Empty';
 
@@ -15,21 +15,14 @@ import './styles.css';
 class Main extends Component {
   static propTypes = {
     actions: mapActionsToPropTypes(UserActions).isRequired,
-  }
-
-  logout = () => {
-    const { actions } = this.props;
-    actions.LOGOUT();
-  }
+  };
 
   render() {
     return (
       <div className="Main">
         <div className="Main-content">
-          <button onClick={this.logout}>Logout</button>
-
           <Switch>
-            <Route path="/app" component={Example} />
+            <Route path="/app" component={Patients} />
             <Route component={Empty} />
           </Switch>
         </div>
@@ -38,9 +31,11 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(
-  state => ({ user: state.get('user') }),
-  dispatch => ({
-    actions: bindActionCreators(UserActions, dispatch),
-  }),
-)(Main));
+export default withRouter(
+  connect(
+    state => ({ user: state.get('user') }),
+    dispatch => ({
+      actions: bindActionCreators(UserActions, dispatch),
+    })
+  )(Main)
+);

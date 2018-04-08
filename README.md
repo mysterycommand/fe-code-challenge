@@ -21,6 +21,7 @@ We at Eden Health would like a UI be able to easily find patient data. Your task
 The API has three collections: patients, appointments, and user actions.
 
 Patients is a collection of Eden Health Members and some basic information about them.
+
 ```
 {
   "id": (int) unique id,
@@ -30,6 +31,7 @@ Patients is a collection of Eden Health Members and some basic information about
 ```
 
 Appointments stores all appointments that have either been booked through our mobile app or directly.
+
 ```
 {
   "id": (int) unique id,
@@ -41,6 +43,7 @@ Appointments stores all appointments that have either been booked through our mo
 ```
 
 User Actions is a collection of actions that have been tracked from our mobile application. There are four types of user actions that are currently tracked: login, logout, book_appointment, and message. Note that appointments that were booked directly through a care provider will not show up as a user action that is tracked in this collection.
+
 ```
 {
   "id": (int) unique id,
@@ -53,16 +56,19 @@ User Actions is a collection of actions that have been tracked from our mobile a
 ##### User Stories and Acceptance Criteria
 
 As a clinician, I would like to be able to see a list of patients in our network and be able to see appointment and user action data associated with them.
-- A clinician should have an overview page listing patients by name.
-- Clicking on a patient should open up their details which includes a list of their appointments sorted by date.
-- It should also display the total number of message user actions associated with that user.
+
+* A clinician should have an overview page listing patients by name.
+* Clicking on a patient should open up their details which includes a list of their appointments sorted by date.
+* It should also display the total number of message user actions associated with that user.
 
 As a clinician, I would like to be able to see a list of appointments.
-- A clinician should have an overview page listing appointments sorted by date.
-- Each appointment should display the date and patient name associated with it.
-- Clicking on an appointment should display the note associated with it.
+
+* A clinician should have an overview page listing appointments sorted by date.
+* Each appointment should display the date and patient name associated with it.
+* Clicking on an appointment should display the note associated with it.
 
 ##### Optional
+
 Feel free to expand upon the above requirements in any ways you would like to showcase your abilities.
 
 ### Task Requirements
@@ -83,10 +89,55 @@ Feel free to expand upon the above requirements in any ways you would like to sh
 
 To give you a sense of how we will be evaluating this challenge, we will provide you with a some general guidelines for how we will approach your submission:
 
-- Does the code work?
-- How easy is it to use the application? Is it relatively pleasant to look at?
-- How is well is the code organized? Does the file structure make sense? Are classes and components organized in a clear and intuitive structure?
-- How is application state organized?
-- What additional frameworks and libraries, if any, were selected and what purpose do they serve?
-- What kind of testing is implemented, and what is being tested?
-- For things that weren't implemented, is a reasonable explanation given?
+* Does the code work?
+* How easy is it to use the application? Is it relatively pleasant to look at?
+* How is well is the code organized? Does the file structure make sense? Are classes and components organized in a clear and intuitive structure?
+* How is application state organized?
+* What additional frameworks and libraries, if any, were selected and what purpose do they serve?
+* What kind of testing is implemented, and what is being tested?
+* For things that weren't implemented, is a reasonable explanation given?
+
+---
+
+### Matt's Notes
+
+Only being passingly familiar with Redux, Thunk, and Immutable, I'm a little worried about my ability to estimate. My first inclination is to just build the main routes (e.g. 'A clinician should have an overview page listing …') and see how long that takes/how it feels.
+
+It seems like both of those main/top-level routes are going to need a kind of accordion/list component, so that's probably worth abstracting a little up front.
+
+Looking around a bit, oh there are no tests. This immutable stuff is going to break my brain for a bit. Let's put some snapshot tests on some components.
+
+Okay, we have a test. I think I would probably petition to have components and scenes all follow a common directory structure … they mostly do now. I'm not a huge fan of case-sensitive paths, but it seems fine for now. I'd do something like this:
+
+```sh
+src/components/
+└── my-component # kebab case
+    ├── __snapshots__
+    │   └── test.js.snap
+    ├── fixtures # handy for tests, mock api responses, etc … also great with Cosmos or Storybook or something similar for building a "living components/style guide"
+    │   └── default.js
+    ├── index.jsx # use the `x` if it uses 'xml extensions'
+    ├── style.scss # or just css, but I've had good success with Sass for global variables and common mixins
+    └── test.jsx # it's going to do like <MyComponent />
+```
+
+The nice thing about a regular structure is that it's very ammenable to creating a little CLI around and then you do something like `$ edencli my-component` (or maybe `$ edencli scene my-scene-component` if you see where I'm going with that, variants and such) and it just generates all that boilerplate for you.
+
+Hmm, testing the private route component seems a little trickier than I'd like to deal with right up front. Need `react-test-renderer` or maybe `enzyme` got a little start but ran into router warnings I couldn't Google quickly enough for my liking. May come back to it, but let's render a couple of routes.
+
+Ugh, now that I look at this routing it seems a little confused. I probably want to display the correct content in the main app context based on if the user is logged in or not, but if I log in I'm redirected to `/app` without the app scene's header. Deleting `/app` from the address bar redirects me to home/the log in screen, but adding `/app` back to the address gives me access … so I'm still logged in. I want to untangle this, but I only have about an hour and 15 left at this point.
+
+So I think what I want to do is pass `isLoggedIn` to `Public` and conditionally render a logout button/link, and also the app content inline if that's true. What if I move `UserActions` up into `Public`?
+
+Okay, that also sorta works and feels a bit better. You can still get to the login screen/component while logged in, but logout is top level now. What I'd really like is for logout to be a visible navigation option if you're logged in and the `/` home route to show either login or the app. I don't remember enough about React Router to do that without looking into it. With about 40 minutes left I feel like I should at least render a list component.
+
+Alright, well I got kinda confused about the redux/thunk/immutable stuff here for a bit so this mostly works, but it's ugly … there's a `this.props.patients.get('patients')` "stutter" in there, and of course it's just rendering an ugly list without the `SELECT_PATIENT` action implemented.
+
+Planning out this work I think it's splittable into a couple of different areas of focus:
+
+* components: e.g. the accordion/list mentioned above, the nav bar and items seem like they could be their own things
+* routing: routing is currently spread across `rootNode`, `Main`, and `Public` - would be cool if there was a central `routes` module or component
+* reducers/storage: one thing that's not super clear to me in this 3 hours is whether Immutable and Redux/Thunk are really getting us that much here … having not used them in a while I certainly struggled with their APIs more than I'd have liked … I'm also not sure how the reducer jobs would handle/want me to handle crossing "duck" boundaries when we'd need to get a list of appointments by patient id
+* testing: obviously something is missing from that private route test, and I didn't write any tests trying to work throught the action creator/reducer stuff just because Redux is out of habit for me and I didn't want to mess with it … looking up at my `cli` idea I think it'd probably also be cool to have something like `$ edencli duck patients` that generated the get all, get one, request, success, failure boilerplate for you assuming some interface like you have in that `api` lib
+
+Answering `ANSWERS.md` now.

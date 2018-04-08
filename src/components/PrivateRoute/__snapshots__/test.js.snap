@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrivateRoute should do the right thing based on props 1`] = `
+<PrivateRoute
+  component={[Function]}
+  isAuthenticated={false}
+  redirectTo="/"
+/>
+`;
+
+exports[`PrivateRoute should do the right thing based on props 2`] = `
+<PrivateRoute
+  component={[Function]}
+  isAuthenticated={true}
+  redirectTo="/"
+/>
+`;
+
+exports[`PrivateRoute should do the right thing based on props 3`] = `
+<PrivateRoute
+  component={[Function]}
+  isAuthenticated={true}
+  redirectTo="/glerb"
+/>
+`;
+
+exports[`PrivateRoute should do the right thing based on props 4`] = `
+<PrivateRoute
+  component={[Function]}
+  isAuthenticated={false}
+  redirectTo="/glerb"
+/>
+`;
