@@ -2,11 +2,13 @@
 import { combineReducers } from 'redux-immutable';
 
 import app from './app';
+import patients from './patients';
 import router from './router';
 import user from './user';
 
 const combined = combineReducers({
   app,
+  patients,
   router,
   user,
 });

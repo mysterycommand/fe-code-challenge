@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter, Switch, Route } from 'react-router-dom';
 
-import Example from './Example';
+import Patients from './Patients';
 
 import Empty from '../../components/Empty';
 
@@ -22,7 +22,7 @@ class Main extends Component {
       <div className="Main">
         <div className="Main-content">
           <Switch>
-            <Route path="/app" component={Example} />
+            <Route path="/app" component={Patients} />
             <Route component={Empty} />
           </Switch>
         </div>
