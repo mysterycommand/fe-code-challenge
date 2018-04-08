@@ -100,3 +100,7 @@ To give you a sense of how we will be evaluating this challenge, we will provide
 ---
 
 ### Matt's Notes
+
+Only being passingly familiar with Redux, Thunk, and Immutable, I'm a little worried about my ability to estimate. My first inclination is to just build the main routes (e.g. 'A clinician should have an overview page listing …') and see how long that takes/how it feels.
+
+It seems like both of those main/top-level routes are going to need a kind of accordion/list component, so that's probably worth abstracting a little up front.
