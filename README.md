@@ -21,6 +21,7 @@ We at Eden Health would like a UI be able to easily find patient data. Your task
 The API has three collections: patients, appointments, and user actions.
 
 Patients is a collection of Eden Health Members and some basic information about them.
+
 ```
 {
   "id": (int) unique id,
@@ -30,6 +31,7 @@ Patients is a collection of Eden Health Members and some basic information about
 ```
 
 Appointments stores all appointments that have either been booked through our mobile app or directly.
+
 ```
 {
   "id": (int) unique id,
@@ -41,6 +43,7 @@ Appointments stores all appointments that have either been booked through our mo
 ```
 
 User Actions is a collection of actions that have been tracked from our mobile application. There are four types of user actions that are currently tracked: login, logout, book_appointment, and message. Note that appointments that were booked directly through a care provider will not show up as a user action that is tracked in this collection.
+
 ```
 {
   "id": (int) unique id,
@@ -53,16 +56,19 @@ User Actions is a collection of actions that have been tracked from our mobile a
 ##### User Stories and Acceptance Criteria
 
 As a clinician, I would like to be able to see a list of patients in our network and be able to see appointment and user action data associated with them.
-- A clinician should have an overview page listing patients by name.
-- Clicking on a patient should open up their details which includes a list of their appointments sorted by date.
-- It should also display the total number of message user actions associated with that user.
+
+* A clinician should have an overview page listing patients by name.
+* Clicking on a patient should open up their details which includes a list of their appointments sorted by date.
+* It should also display the total number of message user actions associated with that user.
 
 As a clinician, I would like to be able to see a list of appointments.
-- A clinician should have an overview page listing appointments sorted by date.
-- Each appointment should display the date and patient name associated with it.
-- Clicking on an appointment should display the note associated with it.
+
+* A clinician should have an overview page listing appointments sorted by date.
+* Each appointment should display the date and patient name associated with it.
+* Clicking on an appointment should display the note associated with it.
 
 ##### Optional
+
 Feel free to expand upon the above requirements in any ways you would like to showcase your abilities.
 
 ### Task Requirements
@@ -83,10 +89,14 @@ Feel free to expand upon the above requirements in any ways you would like to sh
 
 To give you a sense of how we will be evaluating this challenge, we will provide you with a some general guidelines for how we will approach your submission:
 
-- Does the code work?
-- How easy is it to use the application? Is it relatively pleasant to look at?
-- How is well is the code organized? Does the file structure make sense? Are classes and components organized in a clear and intuitive structure?
-- How is application state organized?
-- What additional frameworks and libraries, if any, were selected and what purpose do they serve?
-- What kind of testing is implemented, and what is being tested?
-- For things that weren't implemented, is a reasonable explanation given?
+* Does the code work?
+* How easy is it to use the application? Is it relatively pleasant to look at?
+* How is well is the code organized? Does the file structure make sense? Are classes and components organized in a clear and intuitive structure?
+* How is application state organized?
+* What additional frameworks and libraries, if any, were selected and what purpose do they serve?
+* What kind of testing is implemented, and what is being tested?
+* For things that weren't implemented, is a reasonable explanation given?
+
+---
+
+### Matt's Notes
