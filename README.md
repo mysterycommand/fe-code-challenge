@@ -106,3 +106,19 @@ Only being passingly familiar with Redux, Thunk, and Immutable, I'm a little wor
 It seems like both of those main/top-level routes are going to need a kind of accordion/list component, so that's probably worth abstracting a little up front.
 
 Looking around a bit, oh there are no tests. This immutable stuff is going to break my brain for a bit. Let's put some snapshot tests on some components.
+
+Okay, we have a test. I think I would probably petition to have components and scenes all follow a common directory structure … they mostly do now. I'm not a huge fan of case-sensitive paths, but it seems fine for now. I'd do something like this:
+
+```sh
+src/components/
+└── my-component # kebab case
+    ├── __snapshots__
+    │   └── test.js.snap
+    ├── fixtures # handy for tests, mock api responses, etc … also great with Cosmos or Storybook or something similar for building a "living components/style guide"
+    │   └── default.js
+    ├── index.jsx # use the `x` if it uses 'xml extensions'
+    ├── style.scss # or just css, but I've had good success with Sass for global variables and common mixins
+    └── test.jsx # it's going to do like <MyComponent />
+```
+
+The nice thing about a regular structure is that it's very ammenable to creating a little CLI around and then you do something like `$ edencli my-component` and it just generates all that boilerplate for you.
