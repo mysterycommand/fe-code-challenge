@@ -122,3 +122,5 @@ src/components/
 ```
 
 The nice thing about a regular structure is that it's very ammenable to creating a little CLI around and then you do something like `$ edencli my-component` (or maybe `$ edencli scene my-scene-component` if you see where I'm going with that, variants and such) and it just generates all that boilerplate for you.
+
+Hmm, testing the private route component seems a little trickier than I'd like to deal with right up front. Need `react-test-renderer` or maybe `enzyme` got a little start but ran into router warnings I couldn't Google quickly enough for my liking. May come back to it, but let's render a couple of routes.
