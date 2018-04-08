@@ -126,3 +126,5 @@ The nice thing about a regular structure is that it's very ammenable to creating
 Hmm, testing the private route component seems a little trickier than I'd like to deal with right up front. Need `react-test-renderer` or maybe `enzyme` got a little start but ran into router warnings I couldn't Google quickly enough for my liking. May come back to it, but let's render a couple of routes.
 
 Ugh, now that I look at this routing it seems a little confused. I probably want to display the correct content in the main app context based on if the user is logged in or not, but if I log in I'm redirected to `/app` without the app scene's header. Deleting `/app` from the address bar redirects me to home/the log in screen, but adding `/app` back to the address gives me access … so I'm still logged in. I want to untangle this, but I only have about an hour and 15 left at this point.
+
+So I think what I want to do is pass `isLoggedIn` to `Public` and conditionally render a logout button/link, and also the app content inline if that's true.
