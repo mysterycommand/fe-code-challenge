@@ -130,3 +130,14 @@ Ugh, now that I look at this routing it seems a little confused. I probably want
 So I think what I want to do is pass `isLoggedIn` to `Public` and conditionally render a logout button/link, and also the app content inline if that's true. What if I move `UserActions` up into `Public`?
 
 Okay, that also sorta works and feels a bit better. You can still get to the login screen/component while logged in, but logout is top level now. What I'd really like is for logout to be a visible navigation option if you're logged in and the `/` home route to show either login or the app. I don't remember enough about React Router to do that without looking into it. With about 40 minutes left I feel like I should at least render a list component.
+
+Alright, well I got kinda confused about the redux/thunk/immutable stuff here for a bit so this mostly works, but it's ugly … there's a `this.props.patients.get('patients')` "stutter" in there, and of course it's just rendering an ugly list without the `SELECT_PATIENT` action implemented.
+
+Planning out this work I think it's splittable into a couple of different areas of focus:
+
+* components: e.g. the accordion/list mentioned above, the nav bar and items seem like they could be their own things
+* routing: routing is currently spread across `rootNode`, `Main`, and `Public` - would be cool if there was a central `routes` module or component
+* reducers/storage: one thing that's not super clear to me in this 3 hours is whether Immutable and Redux/Thunk are really getting us that much here … having not used them in a while I certainly struggled with their APIs more than I'd have liked … I'm also not sure how the reducer jobs would handle/want me to handle crossing "duck" boundaries when we'd need to get a list of appointments by patient id
+* testing: obviously something is missing from that private route test, and I didn't write any tests trying to work throught the action creator/reducer stuff just because Redux is out of habit for me and I didn't want to mess with it … looking up at my `cli` idea I think it'd probably also be cool to have something like `$ edencli duck patients` that generated the get all, get one, request, success, failure boilerplate for you assuming some interface like you have in that `api` lib
+
+Answering `ANSWERS.md` now.
