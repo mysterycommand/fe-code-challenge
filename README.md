@@ -121,4 +121,4 @@ src/components/
     └── test.jsx # it's going to do like <MyComponent />
 ```
 
-The nice thing about a regular structure is that it's very ammenable to creating a little CLI around and then you do something like `$ edencli my-component` and it just generates all that boilerplate for you.
+The nice thing about a regular structure is that it's very ammenable to creating a little CLI around and then you do something like `$ edencli my-component` (or maybe `$ edencli scene my-scene-component` if you see where I'm going with that, variants and such) and it just generates all that boilerplate for you.
