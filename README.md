@@ -127,4 +127,6 @@ Hmm, testing the private route component seems a little trickier than I'd like t
 
 Ugh, now that I look at this routing it seems a little confused. I probably want to display the correct content in the main app context based on if the user is logged in or not, but if I log in I'm redirected to `/app` without the app scene's header. Deleting `/app` from the address bar redirects me to home/the log in screen, but adding `/app` back to the address gives me access … so I'm still logged in. I want to untangle this, but I only have about an hour and 15 left at this point.
 
-So I think what I want to do is pass `isLoggedIn` to `Public` and conditionally render a logout button/link, and also the app content inline if that's true.
+So I think what I want to do is pass `isLoggedIn` to `Public` and conditionally render a logout button/link, and also the app content inline if that's true. What if I move `UserActions` up into `Public`?
+
+Okay, that also sorta works and feels a bit better. You can still get to the login screen/component while logged in, but logout is top level now. What I'd really like is for logout to be a visible navigation option if you're logged in and the `/` home route to show either login or the app. I don't remember enough about React Router to do that without looking into it. With about 40 minutes left I feel like I should at least render a list component.

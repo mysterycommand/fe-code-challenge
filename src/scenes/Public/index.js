@@ -9,8 +9,9 @@ import PropTypes from 'prop-types';
 import Main from '../Main/';
 import Login from './Login';
 import About from './About';
-import PrivateRoute from '../../components/PrivateRoute';
 
+import { UserActions } from '../../actions';
+import PrivateRoute from '../../components/PrivateRoute';
 import logo from '../../assets/logo.svg';
 import './styles.css';
 
@@ -26,8 +27,9 @@ class Public extends Component {
   };
 
   renderNavBar = () => {
-    const { location, actions } = this.props;
+    const { location, actions, isLoggedIn } = this.props;
     const pathname = location.get('pathname');
+
     const menuBarItems = [
       {
         name: 'Home',
@@ -38,6 +40,7 @@ class Public extends Component {
         path: '/about',
       },
     ];
+
     const menuBarItemComponents = menuBarItems.map(item => {
       return (
         <a
@@ -53,6 +56,22 @@ class Public extends Component {
         </a>
       );
     });
+
+    if (isLoggedIn) {
+      menuBarItemComponents.push(
+        <a
+          key="Logout"
+          href="/"
+          onClick={e => {
+            e.preventDefault();
+            actions.LOGOUT();
+          }}
+        >
+          Logout
+        </a>
+      );
+    }
+
     return <div className="Public-navbar">{menuBarItemComponents}</div>;
   };
 
@@ -90,6 +109,7 @@ export default withRouter(
     dispatch => ({
       actions: bindActionCreators(
         {
+          ...UserActions,
           navigate: path => push(path),
         },
         dispatch
